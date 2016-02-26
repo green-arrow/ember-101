@@ -1,0 +1,110 @@
+// Bespoke Classes: https://github.com/markdalgleish/bespoke-classes
+// Stylus: http://learnboost.github.io/stylus
+
+@import 'normalizecss/normalize.css'
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+$font-family        = 'Lato', sans-serif
+$font-weight-normal = 400
+$font-weight-bold   = 700
+
+// Colors
+$background    = #FFFBF5
+$text-color    = #865931
+$primary-color = #DD6A58
+$primary-dark  = #C13C27
+
+.bespoke-parent
+  text-size-adjust: auto
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  font-family: 'Lato', sans-serif
+  font-weight: $font-weight-normal
+  background: $background
+  color: $text-color
+  overflow: hidden
+
+.bespoke-scale-parent
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  pointer-events: none
+  .bespoke-active
+    pointer-events: auto
+
+.bespoke-slide
+  width: 640px
+  height: 480px
+  position: absolute
+  top: 50%
+  left: 50%
+  margin-left: -(@width / 2)
+  margin-top: -(@height / 2)
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.bespoke-slide h1,
+.bespoke-slide h2,
+.bespoke-slide h3,
+.bespoke-slide h4,
+.bespoke-slide h5,
+.bespoke-slide h6
+  font-weight: $font-weight-bold
+
+.bespoke-slide h1,
+.bespoke-slide h2
+  color: $primary-color
+
+.bespoke-slide a
+  color: $primary-color
+
+.bespoke-slide a:hover
+  color: $primary-dark
+
+.bespoke-inactive
+  opacity: 0
+  pointer-events: none
+
+.bespoke-bullet-inactive
+  opacity: 0
+  pointer-events: none
+
+.bespoke-backdrop
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: -1
+  opacity: 0
+
+.bespoke-backdrop-active
+  opacity: 1
+
+.bespoke-progress-parent
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: .3vw
+
+.bespoke-progress-bar
+  position: absolute
+  height: 100%
+  background: #ccc
+  transition: width .6s ease
+
+.emphatic
+  background: #222
+
+.emphatic-text
+  color: white
