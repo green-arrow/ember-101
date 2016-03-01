@@ -1,5 +1,6 @@
 // Require Node modules in the browser thanks to Browserify: http://browserify.org
 var bespoke = require('bespoke'),
+  bespokeFx = require('bespoke-fx'),
   classes = require('bespoke-classes'),
   keys = require('bespoke-keys'),
   touch = require('bespoke-touch'),
@@ -18,7 +19,11 @@ bespoke.from('article', [
   scale(),
   hash(),
   progress(),
-  themeEmber()
+  themeEmber(),
+  bespokeFx({
+    direction: "horizontal",
+    transition: "move-both-fade"
+  })
 ]);
 
 // Highlight.js

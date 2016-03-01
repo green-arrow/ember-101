@@ -9,6 +9,10 @@
 // Check out "bower_components/prism/themes/" for available themes
 @import 'highlight.js/styles/zenburn.css'
 
+// Animations from 'bespoke-fx'
+@import 'bespoke-fx/lib/main.css'
+@import 'bespoke-fx/lib/animations.css'
+
 .presentation-logo
   position: absolute
   left: 0
@@ -47,9 +51,10 @@
   justify-content: center
   align-items: center
 
-.bespoke-inactive
-  opacity: 0
-  pointer-events: none
+// Take care of issue with bespoke-fx using
+// secioon.bespoke-slide and setting display block
+section.bespoke-slide
+  display: flex !important
 
 .bespoke-bullet-inactive
   opacity: 0

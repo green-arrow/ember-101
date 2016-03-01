@@ -11,59 +11,270 @@ html
 
     article
 
-      section
+      section(data-bespoke-hash='title')
         h1 Ember 101
 
-      section
-        h2 Keyboard Interaction
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-keys">bespoke-keys</a>
+      section(data-bespoke-hash='anatomy')
+        h2 Anatomy
+        img.with-border(src="images/ember-core-concepts.png", alt="Core Ember Concepts")
 
-      section
-        h2 Touch Interaction
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-touch">bespoke-touch</a>
-
-      section
-        h2 Responsive Slides
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-scale">bespoke-scale</a>
-
-      section
-        h2 Bullet List
-        h3.bullet Powered by <a href="https://github.com/markdalgleish/bespoke-bullets">bespoke-bullets</a>
+      section(data-bespoke-hash='url')
+        h2 Url
+        h3.bullet First-class Citizen
+        h3.bullet Ways to change
         ul
-          li Bullet 1
-          li Bullet 2
-          li Bullet 3
+          li Initial load
+          li Manual change from user
+          li User clicks link
+          li Other application event
 
-      section
-        h2 Syntax Highlighting
-        h3 Powered by <a href="http://twitter.com/LeaVerou">Lea Verou</a>'s <a href="https://github.com/LeaVerou/prism">Prism</a>
+      section(data-bespoke-hash='routing')
+        h2 Routing
+        ul.bullet
+          li Router
+          li Route Handlers
+
+      section(data-bespoke-hash='router-js')
+        h2 Router.js
         pre
           code.language-javascript.
-            bespoke.from('article', [
-              classes(),
-              keys(),
-              touch(),
-              bullets('li, .bullet')
-            ]);
+            import Ember from 'ember';
+            import config from './config/environment';
 
-      section(data-bespoke-hash='named-route')
-        h2 Named Route
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-hash">bespoke-hash</a>
-        p Look up! This route has been named with a <em>'data-bespoke-hash'</em> attribute.
+            const Router = Ember.Router.extend({
+              location: config.locationType
+            });
 
-      section
-        h2.bullet Just the beginning...
-        br
+            Router.map(function() {
+              this.route('rentals');
+              this.route('rental-details', { path: '/rentals/:rentalId' }, function() {
+                this.route('documents');
+                this.route('settings');
+              });
+            });
+
+            export default Router;
+
+      section(data-bespoke-hash='route')
+        h2 rental-details/route.js
+        pre
+          code.language-javascript.
+            import Ember from 'ember';
+
+            export default Ember.Route.extend({
+              model(params) {
+                return this.store.findRecord('rental', params.rentalId);
+              }
+            });
+
+      section(data-bespoke-hash='default-routes')
+        h2 Default Routes
+
+      section(data-bespoke-hash='application-route')
+        h2.bullet Application Route
+        h3.bullet First route entered on app boot
+        h3.bullet Header / Footer
+        h3.bullet Parent of all other routes
+
+      section(data-bespoke-hash='index-route')
+        h2.bullet Index Route
+        h3.bullet Provided at every route level (including Application)
+        pre.bullet
+          code.language-javascript.
+            Router.map(function() {
+              this.route('index', { path: '/' });
+              this.route('posts', function () {
+                this.route('index', { path: '/' });
+                this.route('post-details', { path: 'postId' });
+              });
+            });
+
+      section(data-bespoke-hash='nested-routes')
+        h2 Nested Routes
+        ul.bullet
+          li Nested Templates
+          li Master Details Views
+        pre.bullet
+          code.language-javascript.
+            Router.map(function() {
+              this.route('posts', function () {
+                this.route('post-details', { path: 'postId' });
+              });
+            });
+
+      section(data-bespoke-hash='dynamic-segments')
+        h2.bullet Dynamic Segments
+        h3.bullet Dynamic porition of Url
+        h3.bullet Provided to model hook of route
+        pre.bullet
+          code.language-javascript.
+            // Router.js
+            Router.map(function() {
+              this.route('posts', function () {
+                this.route('post-details', { path: 'postId' });
+              });
+            });
+
+            // post-details route.js
+            export default Ember.Route.extend({
+              model(params) {
+                // params.postId is found in the url
+                return this.store.findRecord('post', params.postId);
+              }
+            });
+
+      section(data-bespoke-hash='controllers')
+        h2.bullet Controllers
+        h3.bullet Origins
+        h3.bullet Phased out
+        h3.bullet Template context is the controller
+        h3.bullet Useful for:
         ul
-          li Edit <a href="http://jade-lang.com/">Jade</a> markup in <em>'src/index.jade'</em>
-          li Edit <a href="http://learnboost.github.io/stylus/">Stylus</a> styles in <em>'src/styles/main.styl'</em>
-          li Edit JavaScript in <em>'src/scripts/main.js'</em>
-        br
-        ul
-          li
-            strong Enjoy! :)
-            a(href='http://twitter.com/markdalgleish')  -@markdalgleish
+          li Maintaining state based on current route
+          li Sending user actions to the route
 
-    img.presentation-logo(src='images/tomster-under-construction.png', width='150px', height='150px')
+      section(data-bespoke-hash='models')
+        h2 Models
+        ul.bullet
+          li Represent underlying data
+          li Tend to be persistent
+          li Single data store
+
+      section(data-bespoke-hash='ember-data')
+        h2 Ember Data
+        ul.bullet
+          li Convention over Configuration
+          li Reduces boilerplate integration code
+          li JSON API
+
+      section(data-bespoke-hash='templates')
+        h2 Templates
+        h3 <a href="https://github.com/tildeio/htmlbars">HTMLBars</a>
+        h3 Built on <a href="http://www.handlebarsjs.com/">Handlebars</a>
+
+      section(data-bespoke-hash='template-helpers')
+        h2.bullet Template Helpers
+        h3.bullet Helper definition
+        pre.bullet
+          code.language-javascript.
+            export function sum(params, /* hash */) {
+              return params.reduce((a, b) => {
+                return a + b;
+              });
+            };
+
+            export default Ember.Helper.helper(sum);
+
+        h3.bullet Helper Invocation
+        pre.bullet
+          code.language-htmlbars.
+            &lt;p&gt;Total: {{sum 1 2 3}}&lt;/p&gt;
+
+        h3.bullet Nested Helper Invocation
+        pre.bullet
+          code.language-htmlbars.
+            {{sum (multiply 2 4) 2}}
+
+      section(data-bespoke-hash='testing')
+        h2.bullet Testing
+        h3.bullet First-class Citizen
+        ul
+          li Acceptance Tests
+          li Unit Tests
+          li Integration Tests
+
+      section(data-bespoke-hash='acceptance-testing')
+        h2 Acceptance Testing
+        ul.bullet
+          li Test user interaction and application flow
+          li Mimic user actions (form filling, click buttons)
+        pre.bullet
+          code.language-javascript.
+            test('should add new post', function(assert) {
+              // visit, fillIn, click, andThen - all test helpers
+              visit('/posts/new');
+              fillIn('input.title', 'My new post');
+              click('button.submit');
+              andThen(() => assert.equal(find('ul.posts li:first').text(), 'My new post'));
+            });
+
+      section(data-bespoke-hash='unit-testing')
+        h2 Unit Testing
+        ul.bullet
+          li Narrow scope
+          li Test isolated pieces of code
+        pre.bullet
+          code.language-javascript.
+            export default Ember.Object.extend({
+              foo: 'bar',
+
+              computedFoo: Ember.computed('foo', function() {
+                const foo = this.get('foo');
+                return `computed ${foo}`;
+              })
+            });
+        pre.bullet
+          code.language-javascript.
+            import { moduleFor, test } from 'ember-qunit';
+
+            moduleFor('model:some-thing', 'Unit | some thing', {
+              unit: true
+            });
+
+            test('should correctly concat foo', function(assert) {
+              const someThing = this.subject();
+              someThing.set('foo', 'baz');
+              assert.equal(someThing.get('computedFoo'), 'computed baz');
+            });
+
+      section(data-bespoke-hash='integration-testing')
+        h2 Integration Testing
+        ul.bullet
+          li Middle ground between acceptance and unit tests
+          li Ensure data / actions are passed properly
+          li Useful for testing components
+
+      section(data-bespoke-hash='integration-test-example')
+        h2 Integration Testing Example
+        pre.bullet
+          code.language-javascript.
+            // components/pretty-color.js
+            export default Ember.Component.extend({
+              attributeBindings: ['style'],
+
+              style: Ember.computed('name', function() {
+                const name = this.get('name');
+                return `color: ${name}`;
+              })
+            });
+        pre.bullet
+          code.language-javascript.
+            moduleForComponent('pretty-color', 'Integration | Component | pretty color', {
+              integration: true,
+
+              test('should change colors', function(assert) {
+                assert.expect(2);
+
+                // set the outer context to red
+                this.set('colorValue', 'red');
+
+                this.render(hbs`{{pretty-color name=colorValue}}`);
+
+                assert.equal(this.$('div').attr('style'), 'color: red', 'starts as red');
+
+                this.set('colorValue', 'blue');
+
+                assert.equal(this.$('div').attr('style'), 'color: blue', 'updates to blue');
+              });
+            });
+
+      section(data-bespoke-hash='links')
+        h2 Links
+        h3 Versioned Guides: <a href="https://guides.emberjs.com/v2.4.0">https://guides.emberjs.com/v2.4.0</a>
+
+      section(data-bespoke-hash='questions')
+        h2 Questions?
+
+    img.presentation-logo(src='images/tomster-under-construction.png', alt="Tomster Logo", width='150px', height='150px')
 
     script(src='build/build.js')

@@ -70,9 +70,16 @@ $primary-dark  = #C13C27
 .bespoke-slide a:hover
   color: $primary-dark
 
-.bespoke-inactive
-  opacity: 0
-  pointer-events: none
+.bespoke-slide img
+  max-width: 80%
+  max-height: 80%
+
+.bespoke-slide img.with-border
+  border: 1px solid $text-color
+
+.bespoke-slide pre
+  font-size: .66em
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
 .bespoke-bullet-inactive
   opacity: 0
@@ -97,10 +104,10 @@ $primary-dark  = #C13C27
   right: 0
   height: .3vw
 
-.bespoke-progress-bar
+.bespoke-progress-parent .bespoke-progress-bar
   position: absolute
   height: 100%
-  background: #ccc
+  background: $primary-color
   transition: width .6s ease
 
 .emphatic
