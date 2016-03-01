@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Ember 101</title>
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+  </head>
+  <body>
+    <article>
+      <section data-bespoke-hash="title">
+        <h1>Ember 101</h1>
+      </section>
+      <section data-bespoke-hash="anatomy">
+        <h2>Anatomy</h2><img src="images/ember-core-concepts.png" alt="Core Ember Concepts" class="with-border">
+      </section>
+      <section data-bespoke-hash="url">
+        <h2>Url</h2>
+        <h3 class="bullet">First-class Citizen</h3>
+        <h3 class="bullet">Ways to change</h3>
+        <ul>
+          <li>Initial load</li>
+          <li>Manual change from user</li>
+          <li>User clicks link</li>
+          <li>Other application event</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="routing">
+        <h2>Routing</h2>
+        <ul class="bullet">
+          <li>Router</li>
+          <li>Route Handlers</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="router-js">
+        <h2>Router.js</h2>
+        <pre><code class="language-javascript">import Ember from 'ember';
+import config from './config/environment';
+
+const Router = Ember.Router.extend({
+  location: config.locationType
+});
+
+Router.map(function() {
+  this.route('rentals');
+  this.route('rental-details', { path: '/rentals/:rentalId' }, function() {
+    this.route('documents');
+    this.route('settings');
+  });
+});
+
+export default Router;
+</code></pre>
+      </section>
+      <section data-bespoke-hash="route">
+        <h2>rental-details/route.js</h2>
+        <pre><code class="language-javascript">import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model(params) {
+    return this.store.findRecord('rental', params.rentalId);
+  }
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="default-routes">
+        <h2>Default Routes</h2>
+      </section>
+      <section data-bespoke-hash="application-route">
+        <h2 class="bullet">Application Route</h2>
+        <h3 class="bullet">First route entered on app boot</h3>
+        <h3 class="bullet">Header / Footer</h3>
+        <h3 class="bullet">Parent of all other routes</h3>
+      </section>
+      <section data-bespoke-hash="index-route">
+        <h2 class="bullet">Index Route</h2>
+        <h3 class="bullet">Provided at every route level (including Application)</h3>
+        <pre class="bullet"><code class="language-javascript">Router.map(function() {
+  this.route('index', { path: '/' });
+  this.route('posts', function () {
+    this.route('index', { path: '/' });
+    this.route('post-details', { path: 'postId' });
+  });
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="nested-routes">
+        <h2>Nested Routes</h2>
+        <ul class="bullet">
+          <li>Nested Templates</li>
+          <li>Master Details Views</li>
+        </ul>
+        <pre class="bullet"><code class="language-javascript">Router.map(function() {
+  this.route('posts', function () {
+    this.route('post-details', { path: 'postId' });
+  });
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="dynamic-segments">
+        <h2 class="bullet">Dynamic Segments</h2>
+        <h3 class="bullet">Dynamic porition of Url</h3>
+        <h3 class="bullet">Provided to model hook of route</h3>
+        <pre class="bullet"><code class="language-javascript">// Router.js
+Router.map(function() {
+  this.route('posts', function () {
+    this.route('post-details', { path: 'postId' });
+  });
+});
+
+// post-details route.js
+export default Ember.Route.extend({
+  model(params) {
+    // params.postId is found in the url
+    return this.store.findRecord('post', params.postId);
+  }
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="controllers">
+        <h2 class="bullet">Controllers</h2>
+        <h3 class="bullet">Origins</h3>
+        <h3 class="bullet">Phased out</h3>
+        <h3 class="bullet">Template context is the controller</h3>
+        <h3 class="bullet">Useful for:</h3>
+        <ul>
+          <li>Maintaining state based on current route</li>
+          <li>Sending user actions to the route</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="models">
+        <h2>Models</h2>
+        <ul class="bullet">
+          <li>Represent underlying data</li>
+          <li>Tend to be persistent</li>
+          <li>Single data store</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="ember-data">
+        <h2>Ember Data</h2>
+        <ul class="bullet">
+          <li>Convention over Configuration</li>
+          <li>Reduces boilerplate integration code</li>
+          <li>JSON API</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="templates">
+        <h2>Templates</h2>
+        <h3><a href="https://github.com/tildeio/htmlbars">HTMLBars</a></h3>
+        <h3>Built on <a href="http://www.handlebarsjs.com/">Handlebars</a></h3>
+      </section>
+      <section data-bespoke-hash="template-helpers">
+        <h2 class="bullet">Template Helpers</h2>
+        <h3 class="bullet">Helper definition</h3>
+        <pre class="bullet"><code class="language-javascript">export function sum(params, /* hash */) {
+  return params.reduce((a, b) => {
+    return a + b;
+  });
+};
+
+export default Ember.Helper.helper(sum);
+</code></pre>
+        <h3 class="bullet">Helper Invocation</h3>
+        <pre class="bullet"><code class="language-htmlbars">&lt;p&gt;Total: {{sum 1 2 3}}&lt;/p&gt;
+</code></pre>
+        <h3 class="bullet">Nested Helper Invocation</h3>
+        <pre class="bullet"><code class="language-htmlbars">{{sum (multiply 2 4) 2}}
+</code></pre>
+      </section>
+      <section data-bespoke-hash="testing">
+        <h2 class="bullet">Testing</h2>
+        <h3 class="bullet">First-class Citizen</h3>
+        <ul>
+          <li>Acceptance Tests</li>
+          <li>Unit Tests</li>
+          <li>Integration Tests</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="acceptance-testing">
+        <h2>Acceptance Testing</h2>
+        <ul class="bullet">
+          <li>Test user interaction and application flow</li>
+          <li>Mimic user actions (form filling, click buttons)</li>
+        </ul>
+        <pre class="bullet"><code class="language-javascript">test('should add new post', function(assert) {
+  // visit, fillIn, click, andThen - all test helpers
+  visit('/posts/new');
+  fillIn('input.title', 'My new post');
+  click('button.submit');
+  andThen(() => assert.equal(find('ul.posts li:first').text(), 'My new post'));
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="unit-testing">
+        <h2>Unit Testing</h2>
+        <ul class="bullet">
+          <li>Narrow scope</li>
+          <li>Test isolated pieces of code</li>
+        </ul>
+        <pre class="bullet"><code class="language-javascript">export default Ember.Object.extend({
+  foo: 'bar',
+  
+  computedFoo: Ember.computed('foo', function() {
+    const foo = this.get('foo');
+    return `computed ${foo}`;
+  })
+});</code></pre>
+        <pre class="bullet"><code class="language-javascript">import { moduleFor, test } from 'ember-qunit';
+
+moduleFor('model:some-thing', 'Unit | some thing', {
+  unit: true
+});
+
+test('should correctly concat foo', function(assert) {
+  const someThing = this.subject();
+  someThing.set('foo', 'baz');
+  assert.equal(someThing.get('computedFoo'), 'computed baz');
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="integration-testing">
+        <h2>Integration Testing</h2>
+        <ul class="bullet">
+          <li>Middle ground between acceptance and unit tests</li>
+          <li>Ensure data / actions are passed properly</li>
+          <li>Useful for testing components</li>
+        </ul>
+      </section>
+      <section data-bespoke-hash="integration-test-example">
+        <h2>Integration Testing Example</h2>
+        <pre class="bullet"><code class="language-javascript">// components/pretty-color.js
+export default Ember.Component.extend({
+  attributeBindings: ['style'],
+  
+  style: Ember.computed('name', function() {
+    const name = this.get('name');
+    return `color: ${name}`;
+  })
+});</code></pre>
+        <pre class="bullet"><code class="language-javascript">moduleForComponent('pretty-color', 'Integration | Component | pretty color', {
+  integration: true,
+  
+  test('should change colors', function(assert) {
+    assert.expect(2);
+    
+    // set the outer context to red
+    this.set('colorValue', 'red');
+    
+    this.render(hbs`{{pretty-color name=colorValue}}`);
+    
+    assert.equal(this.$('div').attr('style'), 'color: red', 'starts as red');
+    
+    this.set('colorValue', 'blue');
+    
+    assert.equal(this.$('div').attr('style'), 'color: blue', 'updates to blue');
+  });
+});
+</code></pre>
+      </section>
+      <section data-bespoke-hash="links">
+        <h2>Links</h2>
+        <h3>Versioned Guides: <a href="https://guides.emberjs.com/v2.4.0">https://guides.emberjs.com/v2.4.0</a></h3>
+      </section>
+      <section data-bespoke-hash="questions">
+        <h2>Questions?</h2>
+      </section>
+    </article><img src="images/tomster-under-construction.png" alt="Tomster Logo" width="150px" height="150px" class="presentation-logo">
+    <script src="build/build.js"></script>
+  </body>
+</html>
