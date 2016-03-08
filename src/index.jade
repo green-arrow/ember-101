@@ -5,6 +5,7 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
     title Ember 101
 
+    link(rel='shortcut icon', href='images/favicon.png')
     link(rel='stylesheet', type='text/css', href='build/build.css')
 
   body
@@ -13,6 +14,11 @@ html
 
       section(data-bespoke-hash='title')
         h1 Ember 101
+
+      section(data-bespoke-hash='history')
+        h1.bullet History
+        h3.bullet SproutCore
+        h3.bullet Convention over Configuration
 
       section(data-bespoke-hash='anatomy')
         h2 Anatomy
@@ -126,8 +132,8 @@ html
       section(data-bespoke-hash='controllers')
         h2.bullet Controllers
         h3.bullet Origins
-        h3.bullet Phased out
         h3.bullet Template context is the controller
+        h3.bullet Phased out
         h3.bullet Useful for:
         ul
           li Maintaining state based on current route
@@ -278,6 +284,8 @@ html
       section(data-bespoke-hash='links')
         h2 Links
         h3 Versioned Guides: <a href="https://guides.emberjs.com/v2.4.0">https://guides.emberjs.com/v2.4.0</a>
+        h3 Addons: <a href="https://www.emberaddons.com/">https://www.emberaddons.com/</a>
+        h3 Ember Observer: <a href="http://emberobserver.com/">http://emberobserver.com</a>
 
       section(data-bespoke-hash='questions')
         h2 Questions?
